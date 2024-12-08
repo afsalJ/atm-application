@@ -4,6 +4,8 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Queue;
 
+import utils.DoubleUtils;
+
 public class BankService {
 
     private Double balance;
@@ -15,36 +17,36 @@ public class BankService {
         miniStatement = new ArrayDeque<>();
     }
 
-    public String deposit(Integer amount){
+    public String deposit(Double amount){
         if(amount>0){
             balance += amount;
-            String statement = "Deposit: "+amount+" Rs Balance: "+balance+" RS.\n";
+            String statement = (miniStatement.size()+1)+") Deposit: "+DoubleUtils.format(amount)+" Rs Balance: "+DoubleUtils.format(balance)+" RS.\n";
             if(miniStatement.size()==TRANSACTION_LIMIT){
                 miniStatement.remove();
             }
             miniStatement.add(statement);
-            return "Transaction successfull. New Balance:  "+balance+" RS.";    
+            return "Transaction successfull. New Balance:  "+DoubleUtils.format(balance)+" RS.";    
         }else{
             return "unsuccessfull transaction";
         }
     }
 
-    public String withdraw(Integer amount){
+    public String withdraw(Double amount){
         if(amount>0 && balance>=amount){
             balance -=amount;
-            String statement = "Withdraw: "+amount+" Rs Balance: "+balance+" Rs.\n";
+            String statement = (miniStatement.size()+1)+") Withdraw: "+DoubleUtils.format(amount)+" Rs Balance: "+DoubleUtils.format(balance)+" Rs.\n";
             if(miniStatement.size()==TRANSACTION_LIMIT){
                 miniStatement.remove();
             }
             miniStatement.add(statement);
-            return "Transaction successfull. New Balance:  "+balance+" RS.";
+            return "Transaction successfull. New Balance:  "+DoubleUtils.format(balance)+" RS.";
         }else{
             return "unsuccessfull transaction";
         }
     }
 
     public String balanceInquiry(){
-        return "Balance: "+balance+" Rs"; 
+        return "Balance: "+DoubleUtils.format(balance)+" Rs"; 
     }
 
     public String getMiniStatement(){
